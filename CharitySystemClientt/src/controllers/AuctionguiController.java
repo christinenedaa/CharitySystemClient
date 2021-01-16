@@ -25,10 +25,12 @@ import javax.swing.table.DefaultTableModel;
 import org.bson.Document;
 import rmi.AuctionInterface;
 import rmi.AuctionGUI;
+import rmi.DonorGUI;
 
 
 public class AuctionguiController {
     AuctionGUI gui;
+    DonorGUI DG;
     Registry r;
     
     public AuctionguiController(AuctionGUI gui, Registry r){
@@ -40,6 +42,13 @@ public class AuctionguiController {
     gui.getViewbutton().addActionListener(new viewitems());
     gui.getjButton4().addActionListener(new retrieve());
 
+    }
+    
+    public AuctionguiController(DonorGUI DG,Registry r ){
+        this.DG = DG;
+        this.r = r;
+        
+        
     }
     
     
