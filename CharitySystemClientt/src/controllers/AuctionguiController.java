@@ -26,11 +26,17 @@ import org.bson.Document;
 import rmi.AuctionInterface;
 import rmi.AuctionGUI;
 import rmi.DonorGUI;
+import rmi.DonorInterface;
+import rmi.AuctionInterface;
+import rmi.EventInterface;
+import rmi.EventGui;
+import rmi.MerchInterface;
 
 
 public class AuctionguiController {
     AuctionGUI gui;
     DonorGUI DG;
+    EventGui ev;
     Registry r;
     
     public AuctionguiController(AuctionGUI gui, Registry r){
@@ -48,8 +54,22 @@ public class AuctionguiController {
         this.DG = DG;
         this.r = r;
         
-        
+        DG.getjButton2().addActionListener(new Donatemoneybtn());
     }
+    
+    
+    
+    public AuctionguiController(EventGui ev, Registry r) {
+        this.ev = ev;
+        this.r = r;
+        ev.getjButton4().addActionListener(new ReserveBtn());
+        ev.getjButton6().addActionListener(new HostBtn());
+        ev.getjButton5().addActionListener(new PurchaseBtn());
+        ev.getjButton1().addActionListener(new ReserveBtn());
+        ev.getjButton2().addActionListener(new HostBtn());
+        ev.getjButton3().addActionListener(new PurchaseBtn());
+    }
+
     
     
     class Uploaditembutton implements ActionListener{
@@ -244,7 +264,428 @@ class submitauction implements ActionListener{
              Logger.getLogger(AuctionguiController.class.getName()).log(Level.SEVERE, null, ex);
 
     }}}
+      
+    ////////////////////////////////////////////////////////Donor GUI///////////////////////////////////
+    class DonationType implements ActionListener{
+     @Override 
+    public void actionPerformed(ActionEvent ae){
+  try{   
+      
+      DonorInterface DI=(DonorInterface) r.lookup("Donor");
+      DG.getjButton1().addActionListener(new DonateItembtn());
+      DG.getjButton2().addActionListener(new Donatemoneybtn());
+    
+    }catch(RemoteException ex){
+         Logger.getLogger(AuctionguiController.class.getName()).log(Level.SEVERE, null, ex);
 
+    }
+    catch(NotBoundException ex){
+             Logger.getLogger(AuctionguiController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    
+    }
+    
+    }
+    
+
+    class DonateItembtn implements ActionListener{
+     @Override 
+    public void actionPerformed(ActionEvent ae){
+  try{   
+      DG.getjPanel1().setVisible(true);
+      DG.getChooseDonationType().setVisible(false);
+      DonorInterface DI=(DonorInterface) r.lookup("Donor");
+      
+    
+    }catch(RemoteException ex){
+         Logger.getLogger(AuctionguiController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    catch(NotBoundException ex){
+             Logger.getLogger(AuctionguiController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    
+    }
+    
+    }
+    
+    
+    
+    class Donatemoneybtn implements ActionListener{
+     @Override 
+    public void actionPerformed(ActionEvent ae){
+  try{   
+      DG.getPymentMethodPanel().setVisible(true);
+      DonorInterface DI=(DonorInterface) r.lookup("Donor");
+      DG.getjButton3().addActionListener(new PayCash());
+      DG.getjButton4().addActionListener(new PayCard());
+    
+    }catch(RemoteException ex){
+         Logger.getLogger(AuctionguiController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    catch(NotBoundException ex){
+             Logger.getLogger(AuctionguiController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    
+    }
+    
+    }
+    
+    
+    class PayCash implements ActionListener{
+     @Override 
+    public void actionPerformed(ActionEvent ae){
+  try{   
+      DG.getPayCash().setVisible(true);
+      DonorInterface DI=(DonorInterface) r.lookup("Donor");
+      String donorname = DG.getjTextField1().getText();
+      String donoremail = DG.getjTextField2().getText();
+    
+    }catch(RemoteException ex){
+         Logger.getLogger(AuctionguiController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    catch(NotBoundException ex){
+             Logger.getLogger(AuctionguiController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    
+    }
+    
+    }
+    
+    
+    
+    class PayCard implements ActionListener{
+     @Override 
+    public void actionPerformed(ActionEvent ae){
+  try{   
+      DG.getjPanel2().setVisible(true);
+      DonorInterface DI=(DonorInterface) r.lookup("Donor");
+      String donorname = DG.getjTextField5().getText();
+      String cardnumber = DG.getjTextField6().getText();
+      String cvv = DG.getjTextField7().getText();
+      String amount = DG.getjTextField8().getText();
+      
+    
+    }catch(RemoteException ex){
+         Logger.getLogger(AuctionguiController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    catch(NotBoundException ex){
+             Logger.getLogger(AuctionguiController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    
+    }
+    
+    }
+    
+    
+  ///////////////////////////////////////////Event GUI /////////////////////////////////////////////////
+    /***************panel 1 **************/
+    
+      class ReserveEvent implements ActionListener{//for panel
+    @Override 
+    public void actionPerformed(ActionEvent ae){
+    
+    try{
+       
+       ev.getjPanel1().setVisible(true);
+    EventInterface EI = (EventInterface) r.lookup("Event");
+    ev.getjButton4().addActionListener(new ReserveBtn());
+    
+    
+    }catch(RemoteException ex){
+         Logger.getLogger(AuctionguiController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    catch(NotBoundException ex){
+             Logger.getLogger(AuctionguiController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    
+    
+    
+    }
+    
+    }
+    
+      
+         class ReserveBtn implements ActionListener{ //button
+     @Override 
+    public void actionPerformed(ActionEvent ae){
+  try{   
+      
+      
+   
+    EventInterface EI = (EventInterface) r.lookup("Event");
+    
+    String spmail = ev.getjTextField1().getText();
+    int id=Integer.parseInt(ev.getjTextField2().getText());
+     String eventNam = ev.getjTextField3().getText();
+     String eventloc = ev.getjTextField4().getText();
+     String eventdat = ev.getjTextField5().getText();
+     int reqq=Integer.parseInt(ev.getjTextField6().getText());
+     boolean stat = Boolean.parseBoolean(ev.getjTextField7().getText());
+     EI.ReserveEvent(spmail, id, eventNam, eventdat, eventloc, reqq, stat);
+    
+   
+    
+     
+    
+    }catch(RemoteException ex){
+         Logger.getLogger(AuctionguiController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    catch(NotBoundException ex){
+             Logger.getLogger(AuctionguiController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    
+    }
+    
+    }
+      
+      
+      /**************panel 2 **************/
+      
+      
+        class HostMerch implements ActionListener{//for panel
+    @Override 
+    public void actionPerformed(ActionEvent ae){
+    
+    try{
+       
+       ev.getjPanel3().setVisible(true);
+    //EventInterface EI = (EventInterface) r.lookup("Event");
+      MerchInterface MI = (MerchInterface)  r.lookup("Merch");
+    ev.getjButton6().addActionListener(new HostBtn());
+    
+    
+    }catch(RemoteException ex){
+         Logger.getLogger(AuctionguiController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    catch(NotBoundException ex){
+             Logger.getLogger(AuctionguiController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    
+    
+    
+    }
+    
+    }
+      
+      
+        class HostBtn implements ActionListener{ //button
+     @Override 
+    public void actionPerformed(ActionEvent ae){
+  try{   
+      
+      
+   
+   // EventInterface EI = (EventInterface) r.lookup("Event");
+    
+    MerchInterface MI = (MerchInterface)  r.lookup("Merch");
+    
+    String smail = ev.getjTextField10().getText();
+     String MerName = ev.getjTextField11().getText();
+    int Mid=Integer.parseInt(ev.getjTextField12().getText());
+     MI.HostMerch(smail, MerName, Mid);
+     
+    
+   
+    
+     
+    
+    }catch(RemoteException ex){
+         Logger.getLogger(AuctionguiController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    catch(NotBoundException ex){
+             Logger.getLogger(AuctionguiController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    
+    }
+    
+    }
+      /******************panel 3*********/
+      
+       
+        class PurchaseItm implements ActionListener{//for panel
+    @Override 
+    public void actionPerformed(ActionEvent ae){
+    
+    try{
+       
+       ev.getjPanel2().setVisible(true);
+      MerchInterface MI = (MerchInterface)  r.lookup("Merch");
+    ev.getjButton5().addActionListener(new PurchaseBtn());
+    
+    
+    }catch(RemoteException ex){
+         Logger.getLogger(AuctionguiController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    catch(NotBoundException ex){
+             Logger.getLogger(AuctionguiController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    
+    
+    
+    }
+    
+    }
+      
+      
+        class PurchaseBtn implements ActionListener{ //button
+     @Override 
+    public void actionPerformed(ActionEvent ae){
+  try{   
+      
+      
+   
+  
+    
+    MerchInterface MI = (MerchInterface)  r.lookup("Merch");
+    
+    
+    String BuyerM = ev.getjTextField9().getText();
+    int itmid=Integer.parseInt(ev.getjTextField8().getText());
+     MI.PurchaseItem(itmid, BuyerM);
+     
+    
+   
+    
+     
+    
+    }catch(RemoteException ex){
+         Logger.getLogger(AuctionguiController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    catch(NotBoundException ex){
+             Logger.getLogger(AuctionguiController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    
+    }
+    
+    }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    /*****************end my stuff************/    
+        
+        
+        
+        class ReserveNvBar implements ActionListener{
+     @Override 
+    public void actionPerformed(ActionEvent ae){
+      try{
+        ev.getjPanel1().setVisible(true);
+               
+        
+    EventInterface EI = (EventInterface) r.lookup("Event");
+    
+      ev.getjButton1().addActionListener(new ReserveBtn());
+      
+      
+    
+    }catch(RemoteException ex){
+         Logger.getLogger(AuctionguiController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    catch(NotBoundException ex){
+             Logger.getLogger(AuctionguiController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    }
+    
+    
+    }
+    
+        
+        /*****************panel  nav2*********/
+        
+        
+              class HostNvBar implements ActionListener{
+     @Override 
+    public void actionPerformed(ActionEvent ae){
+      try{
+        ev.getjPanel3().setVisible(true);
+               
+        
+    MerchInterface MI = (MerchInterface)  r.lookup("Merch");
+    
+      ev.getjButton2().addActionListener(new HostBtn());
+      
+      
+    
+    }catch(RemoteException ex){
+         Logger.getLogger(AuctionguiController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    catch(NotBoundException ex){
+             Logger.getLogger(AuctionguiController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    }
+    
+    
+    }
+    
+        
+        
+        
+        
+        /**************************/
+        
+              
+               
+              class PurchaseNvBar implements ActionListener{
+     @Override 
+    public void actionPerformed(ActionEvent ae){
+      try{
+        ev.getjPanel2().setVisible(true);
+               
+        
+    MerchInterface MI = (MerchInterface)  r.lookup("Merch");
+    
+      ev.getjButton3().addActionListener(new PurchaseBtn());
+      
+      
+    
+    }catch(RemoteException ex){
+         Logger.getLogger(AuctionguiController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    catch(NotBoundException ex){
+             Logger.getLogger(AuctionguiController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    }
+    
+    
+    }
+    
+        
+              
+              
+        /********************panel 1 nav3*********/
 }
     
     
