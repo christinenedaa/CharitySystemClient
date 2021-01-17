@@ -21,24 +21,37 @@ import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import rmi.Vinterface;
 import rmi.LoginInterface;
 import rmi.*;
 import java.util.Properties;
 
 import javax.swing.JOptionPane;
 import rmi.LoginGUI;
+import rmi.HomeGUI;
+import rmi.Vform;
 
 public class LoginController {
     LoginGUI gui;
     Registry r;
+    HomeGUI hgui;
+    Vform vgui;
     
      public LoginController(LoginGUI gui, Registry r) {
         this.gui = gui;
         this.r = r;
+        this.hgui= hgui;
+        this.vgui=vgui;
         gui.getjButton1().addActionListener(new LoginBtnAction());
 //        gui.getjTextField1().addActionListener(new UsernameAction());
 //        gui.getjTextField2().addActionListener(new PasswordAction());
         gui.getjButton2().addActionListener(new RegisterAction());
+        hgui.getjButton1().addActionListener(new AuctionButton());
+        hgui.getjButton2().addActionListener(new VolunteerButton());
+         hgui.getjButton3().addActionListener(new DonorButton());
+         hgui.getjButton4().addActionListener(new EventButton());
+         hgui.getjButton5().addActionListener(new MerchButton());
+         vgui.getjButton1().addActionListener(new UpdateVolunterButton());
        
     }
 
@@ -66,8 +79,8 @@ public class LoginController {
         }     
         
         else if (result==true){
-        AuctionGUI g=new AuctionGUI();
-        g.setVisible(true);}
+        HomeGUI HG=new HomeGUI();
+        HG.setVisible(true);}
         else {
                 JOptionPane.showMessageDialog(null,"Password and username are incorrect");
                 }
@@ -77,12 +90,7 @@ public class LoginController {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
                 }
       
-              
-        
-      
-        
-  
-    }
+             }
      }
 
     
@@ -109,10 +117,145 @@ public class LoginController {
     }
  
      }
-}
- 
 
+ class AuctionButton implements ActionListener {
+
+        // Whatever written inside this function will execute when the button is clicked
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            try{
+                AuctionInterface AI=(AuctionInterface) r.lookup("Auction");
+            
+         AuctionGUI g=new AuctionGUI();
+        g.setVisible(true);
+           }catch(RemoteException ex){
+         Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    catch(NotBoundException ex){
+             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    }
+ 
+ }
+
+class VolunteerButton implements ActionListener {
+
+        // Whatever written inside this function will execute when the button is clicked
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            try{
+                
+               Vinterface VI =(Vinterface) r.lookup("Volunteer");
+            
+         Vform vg=new Vform();
+        vg.setVisible(true);
+           }catch(RemoteException ex){
+         Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    catch(NotBoundException ex){
+             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    }
+ 
+ }
+
+class DonorButton implements ActionListener {
+
+        // Whatever written inside this function will execute when the button is clicked
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            try{
+                
+               DonorInterface DI =(DonorInterface) r.lookup("Donor");
+            
+         Vform vg=new Vform();
+        vg.setVisible(true);
+           }catch(RemoteException ex){
+         Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    catch(NotBoundException ex){
+             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    }
+ 
+ }
+class EventButton implements ActionListener {
+
+        // Whatever written inside this function will execute when the button is clicked
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            try{
+                
+              EventInterface EI =(EventInterface) r.lookup("Event");
+            
+         EventGui eg=new  EventGui();
+        eg.setVisible(true);
+           }catch(RemoteException ex){
+         Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    catch(NotBoundException ex){
+             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    }
+ 
+ }
+class MerchButton implements ActionListener {
+
+        // Whatever written inside this function will execute when the button is clicked
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            try{
+                
+             EventInterface EI =(EventInterface) r.lookup("Event");
+            
+         EventGui eg=new  EventGui();
+        eg.setVisible(true);
+           }catch(RemoteException ex){
+         Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    catch(NotBoundException ex){
+             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    }
+ 
+ }
      
+
+class UpdateVolunterButton implements ActionListener{
+  @Override 
+    public void actionPerformed(ActionEvent ae){
+    try{
+    
+     Vinterface VI =(Vinterface) r.lookup("Volunteer");
+    String name= vgui.getjTextField1().getText();
+    String email= vgui.getjTextField7().getText();
+    String skills=vgui.getjTextField2().getText();
+    String level=vgui.getjTextField3().getText();
+    String interest=vgui.getjTextField4().getText();
+   String experience=vgui.getjTextField5().getText();
+     VI.Updatedata( name,email, skills,level,interest,experience);
+    
+    }catch(RemoteException ex){
+         Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    catch(NotBoundException ex){
+             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+
+    }
+    }
+}
+     }
   /////////////////////////////////////////////////////////////////////////////////   
 //     
 //     
