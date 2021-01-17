@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package rmi;
+import controllers.LoginController;
 import controllers.AuctionguiController;
 import java.rmi.*;
 import java.rmi.RemoteException;
@@ -18,15 +19,20 @@ public class AuctionClient {
     public static void main(String[] args) {
         try {
             
-            AuctionGUI gui=new AuctionGUI();
+//            AuctionGUI gui=new AuctionGUI();
+//            gui.setVisible(true);
+//    
+//            
+
+
+            LoginGUI gui=new LoginGUI();
             gui.setVisible(true);
-    
-            
             // Connecting to the RMI Registry created on the server
             Registry registry = LocateRegistry.getRegistry(1099);
 
             // Search for the stub "calc"
-            AuctionguiController guicont=new AuctionguiController(gui,registry);
+//            AuctionguiController guicont=new AuctionguiController(gui,registry);
+              LoginController lc=new LoginController(gui,registry);
 
             
            

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package controllers;
 
 /**
  *
@@ -21,7 +21,8 @@ import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import Interface.LoginInterface;
+import rmi.LoginInterface;
+import rmi.*;
 import java.util.Properties;
 
 import javax.swing.JOptionPane;
@@ -35,11 +36,10 @@ public class LoginController {
         this.gui = gui;
         this.r = r;
         gui.getjButton1().addActionListener(new LoginBtnAction());
-        gui.getjTextField1().addActionListener(new UsernameAction());
-        gui.getjTextField2().addActionListener(new PasswordAction());
+//        gui.getjTextField1().addActionListener(new UsernameAction());
+//        gui.getjTextField2().addActionListener(new PasswordAction());
         gui.getjButton2().addActionListener(new RegisterAction());
-        gui.getjTextField2();
-        gui.getjTextField2();
+       
     }
 
     
@@ -49,48 +49,44 @@ public class LoginController {
         @Override
         public void actionPerformed(ActionEvent ae) {
          
-            try {
-                 LoginInterface LG=(LoginInterface) r.lookup("Profile");
-                  Properties prop = new Properties();
+           
+            
                    String Username = gui.getjTextField1().getText();
                    String password = String.valueOf(gui.getjPasswordField2().getPassword());
-       // String password = String.valueOf(gui.getjTextField2().getText());
-        //String select = SelectBox.getSelectedItem().toString(); 
-        MongoClient client = new MongoClient();
-   MongoDatabase charity=client.getDatabase("CharityDB");
-              MongoCollection profile=charity.getCollection("Profile");
-              
-        
-        if (Username.equals("") && password.equals(""))
+                   
+                    
+                try {
+                  LoginInterface  li = (LoginInterface) r.lookup("Profile");
+                     boolean result=li.Login(Username, password);
+                     
+                       if (Username==null || password==null)
         {
-            JOptionPane.showMessageDialog(null, "Username and Password are Empty please Enter Values");
+            JOptionPane.showMessageDialog(null, "Username or Password are Empty please Enter Values");
          
         }     
         
-        else if (password.equals(""))
-        {
-            JOptionPane.showMessageDialog(null, "Password is Empty please Enter Value");
-        }
-        else if(Username.equals(""))
-        {
-            JOptionPane.showMessageDialog(null, "Username is Empty please Enter Value");
-        }
-             
-        LG.Login(Username, password);
-   
+        else if (result==true){
+        AuctionGUI g=new AuctionGUI();
+        g.setVisible(true);}
+        else {
+                JOptionPane.showMessageDialog(null,"Password and username are incorrect");
+                }
+                } catch (RemoteException ex) {
+                    Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NotBoundException ex) {
+                    Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+      
+              
         
-             }catch(RemoteException ex){
-         Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+      
+        
+  
+    }
+     }
 
-    }
-    catch(NotBoundException ex){
-             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-
-    }
-    }
     
     
-    }
      class RegisterAction implements ActionListener{
   @Override 
     public void actionPerformed(ActionEvent ae){
@@ -112,31 +108,32 @@ public class LoginController {
     }
     }
  
+     }
+}
  
- }
+
      
   /////////////////////////////////////////////////////////////////////////////////   
-     
-     
-     
-private static  class UsernameAction implements ActionListener {
+//     
+//     
+//     
+//private static  class UsernameAction implements ActionListener {
+//
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//            }
+//}
+//private static class PasswordAction implements ActionListener {
+//
+//        public PasswordAction() {
+//        }
+//
+//        @Override
+//        public void actionPerformed(ActionEvent e) {
+//            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//        }
+//    }
+//
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-}
-private static class PasswordAction implements ActionListener {
 
-        public PasswordAction() {
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-    }
-
-
-
-}
