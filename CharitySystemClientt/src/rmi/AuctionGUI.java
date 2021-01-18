@@ -652,7 +652,8 @@ public class AuctionGUI extends javax.swing.JFrame {
         return uploaditempanel;
     }
    
-  
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Authenticationstate;

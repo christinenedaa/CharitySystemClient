@@ -24,6 +24,7 @@ public class AuctionClient {
 //    
 //            
 
+          
 
             LoginGUI gui=new LoginGUI();
             gui.setVisible(true);
@@ -34,7 +35,6 @@ public class AuctionClient {
 //            AuctionguiController guicont=new AuctionguiController(gui,registry);
               LoginController lc=new LoginController(gui,registry);
 
-            
            
             
            

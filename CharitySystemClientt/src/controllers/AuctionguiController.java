@@ -23,20 +23,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import org.bson.Document;
-import rmi.AuctionInterface;
-import rmi.AuctionGUI;
-import rmi.DonorGUI;
-import rmi.DonorInterface;
-import rmi.AuctionInterface;
-import rmi.EventInterface;
-import rmi.EventGui;
-import rmi.MerchInterface;
+import rmi.*;
 
 
 public class AuctionguiController {
     AuctionGUI gui;
-    DonorGUI DG;
-    EventGui ev;
+    Donorgu DG;
+    Eventgu ev;
     Registry r;
     
     public AuctionguiController(AuctionGUI gui, Registry r){
@@ -50,7 +43,7 @@ public class AuctionguiController {
 
     }
     
-    public AuctionguiController(DonorGUI DG,Registry r ){
+    public AuctionguiController(Donorgu DG,Registry r ){
         this.DG = DG;
         this.r = r;
         
@@ -59,15 +52,15 @@ public class AuctionguiController {
     
     
     
-    public AuctionguiController(EventGui ev, Registry r) {
+    public AuctionguiController(Eventgu ev, Registry r) {
         this.ev = ev;
         this.r = r;
-        ev.getjButton4().addActionListener(new ReserveBtn());
-        ev.getjButton6().addActionListener(new HostBtn());
-        ev.getjButton5().addActionListener(new PurchaseBtn());
-        ev.getjButton1().addActionListener(new ReserveBtn());
+//        ev.getjButton4().addActionListener(new ReserveBtn());
+//        ev.getjButton6().addActionListener(new HostBtn());
+//        ev.getjButton5().addActionListener(new PurchaseBtn());
+//        ev.getjButton1().addActionListener(new ReserveBtn());
         ev.getjButton2().addActionListener(new HostBtn());
-        ev.getjButton3().addActionListener(new PurchaseBtn());
+//        ev.getjButton3().addActionListener(new PurchaseBtn());
     }
 
     
@@ -313,14 +306,16 @@ class submitauction implements ActionListener{
     
     
     
+     
     class Donatemoneybtn implements ActionListener{
-     @Override 
+    @Override 
     public void actionPerformed(ActionEvent ae){
-  try{   
-      DG.getPymentMethodPanel().setVisible(true);
-      DonorInterface DI=(DonorInterface) r.lookup("Donor");
-      DG.getjButton3().addActionListener(new PayCash());
-      DG.getjButton4().addActionListener(new PayCard());
+    
+    try{
+        DG.getPymentMethodPanel().setVisible(true);
+    DonorInterface AI=(DonorInterface) r.lookup("Donor");
+   
+    //gui.getSubmitupload().addActionListener(new submitupload());
     
     }catch(RemoteException ex){
          Logger.getLogger(AuctionguiController.class.getName()).log(Level.SEVERE, null, ex);
@@ -331,9 +326,12 @@ class submitauction implements ActionListener{
 
     }
     
+    
+    
     }
     
     }
+    
     
     
     class PayCash implements ActionListener{
@@ -489,7 +487,7 @@ class submitauction implements ActionListener{
   try{   
       
       
-   
+   ev.getjPanel3().setVisible(true);
    // EventInterface EI = (EventInterface) r.lookup("Event");
     
     MerchInterface MI = (MerchInterface)  r.lookup("Merch");
@@ -497,6 +495,8 @@ class submitauction implements ActionListener{
     String smail = ev.getjTextField10().getText();
      String MerName = ev.getjTextField11().getText();
     int Mid=Integer.parseInt(ev.getjTextField12().getText());
+    
+    System.out.println("in");
      MI.HostMerch(smail, MerName, Mid);
      
     
