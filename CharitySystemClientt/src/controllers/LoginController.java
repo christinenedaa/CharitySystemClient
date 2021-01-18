@@ -66,6 +66,7 @@ public class LoginController {
             
                    String Username = gui.getjTextField1().getText();
                    String password = String.valueOf(gui.getjPasswordField2().getPassword());
+                           
                    
                     
                 try {
@@ -102,10 +103,10 @@ public class LoginController {
     
      LoginInterface LG=(LoginInterface) r.lookup("Profile");
     String intername= gui.getjTextField2().getText();
-    String interpass=String.valueOf(gui.getjPasswordField2().getPassword());
+    String interpass=String.valueOf(gui.getjPasswordField1().getPassword());
    
      LG.Sign( intername, interpass);
-    
+     JOptionPane.showMessageDialog(null, "now you can log in "); 
     }catch(RemoteException ex){
          Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
 
@@ -121,21 +122,24 @@ public class LoginController {
  class AuctionButton implements ActionListener {
 
         // Whatever written inside this function will execute when the button is clicked
+     
         @Override
         public void actionPerformed(ActionEvent ae) {
-            try{
-                AuctionInterface AI=(AuctionInterface) r.lookup("Auction");
-            
-         AuctionGUI g=new AuctionGUI();
+//            try{
+//                AuctionInterface AI=(AuctionInterface) r.lookup("Auction");
+//            
+//         AuctionGUI g=new AuctionGUI();
+//        g.setVisible(true);
+//           }catch(RemoteException ex){
+//         Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+//
+//    }
+//    catch(NotBoundException ex){
+//             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+//
+//    }
+AuctionGUI g=new AuctionGUI();
         g.setVisible(true);
-           }catch(RemoteException ex){
-         Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-
-    }
-    catch(NotBoundException ex){
-             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-
-    }
     }
  
  }
